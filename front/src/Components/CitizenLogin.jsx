@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import './css/CitizenLogin.css';
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import './css/CitizenLogin.css'
 
 export default function CitizenLogin() {
   const [data, setData] = useState({ email: "", password: "" });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setData({
@@ -16,51 +17,45 @@ export default function CitizenLogin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const api = "http://localhost:9090/api/citizen/login";
-      const response = await axios.post(api, data, {
-        withCredentials: true, 
-        headers: {
-          'Content-Type': 'application/json'
-        }
+      const response = await axios.post("http://localhost:9090/api/citizen/login", data, {
+        withCredentials: true,
+        headers: { "Content-Type": "application/json" }
       });
 
       localStorage.setItem("citizen_token", response.data.token);
-      window.location = "/complaint"; 
-      console.log("Login successful:", response.data.token);
-      // Optionally store token or navigate to dashboard
+      window.location = "/complaint";
     } catch (error) {
       console.error("Error logging in:", error.response?.data || error.message);
     }
   };
 
-  const navigate = useNavigate();
-  
   return (
-    <>
-    <div className="citizen-login-wrapper">
+     <form className = "mainDiv" onSubmit={handleSubmit}>
+    <div className="container">
+      <div className="top"></div>
+      <div className="bottom"></div>
+      <div className="center">
+    
+        <h2>The Citizen Portal</h2>
+        
 
-    <h1>Citizen Login</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="email">Email</label>
-        <input
-          type="email"
+        <input type="email" placeholder="Email"
           name="email"
           id="email"
           onChange={handleChange}
-          value={data.email}
-        />
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          name="password"
+          value={data.email} />
+        <input type="password" placeholder="Password" name="password"
           id="password"
           onChange={handleChange}
           value={data.password}
         />
-        <button type="submit">Login</button>
-        <button onClick={()=> navigate("/citizenRegister")}>Register</button>
-      </form>
+       
+        <button className="button-13" type="submit">Login</button>
+        <button className="button-13" onClick={()=> navigate("/citizenRegister")}>Register</button>
+
+        <h2>&nbsp;</h2>
+
       </div>
-    </>
+    </div> </form>
   );
 }
