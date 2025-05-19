@@ -1,0 +1,98 @@
+/* Simple and Professional Citizen Login */
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #f4f6f8;
+  color: #222;
+}
+
+.citizen-register-wrapper {
+  min-height: 100vh;
+  padding : 2% 0;
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: none;
+}
+
+.citizen-register-wrapper  h1 {
+  text-align: center;
+  color: #1976d2;
+  margin-top: 0;
+  margin-bottom: 28px;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  border-bottom: 2px solid #1976d2;
+  padding-bottom: 10px;
+  width: 100%;
+  max-width: 350px;
+  margin-left: auto;
+  margin-right: auto;
+  background: none;
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+
+.citizen-register-wrapper  form {
+  background: #fff;
+  max-width: 400px;
+  width: 100%;
+  padding: 32px 24px;
+  border-radius: 10px;
+  box-shadow: 0 2px 16px #0001;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border: 1px solid #e0e0e0;
+}
+
+.citizen-register-wrapper  label {
+  font-weight: 600;
+  color: #333;
+  letter-spacing: 0.5px;
+  font-size: 1rem;
+}
+
+.citizen-register-wrapper  input[type="text"],
+.citizen-register-wrapper  input[type="email"],
+.citizen-register-wrapper  input[type="password"],
+.citizen-register-wrapper  input[type="number"] {
+  padding: 10px 12px;
+  border: 1px solid #bdbdbd;
+  border-radius: 6px;
+  font-size: 1rem;
+  background: #fafbfc;
+  color: #222;
+  outline: none;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.citizen-register-wrapper  input:focus {
+  border-color: #1976d2;
+  box-shadow: 0 0 0 2px #1976d222;
+  background: #f0f7ff;
+}
+
+.citizen-register-wrapper button {
+  background: #4d99e6;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 0;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 3px;
+  transition: background 0.2s;
+  letter-spacing: 1px;
+}
+
+.citizen-register-wrapper  button:hover {
+  background: #125ea2;
+  transform: scale(1.03);
+}

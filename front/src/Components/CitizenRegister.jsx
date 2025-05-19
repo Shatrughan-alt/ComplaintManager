@@ -1,7 +1,12 @@
 import React, { useState } from 'react'
 import axios from 'axios';
+import {useNavigate} from 'react-router-dom'
+import './css/CitizenRegister.css'
 
 export default function CitizenRegister() {
+
+  const navigate = useNavigate();
+
     const [data,setData]=useState({
         name:"",
         email:"",
@@ -33,23 +38,25 @@ export default function CitizenRegister() {
     }
   return (
     <>
+    <div className='citizen-register-wrapper'>
     <h1>Citizen Registration</h1>
           <form action="" onSubmit={handleSubmit}>
             <label htmlFor="">Name</label>
               <input type="text" name="name" id="name" onChange={handleChange} value={data.name} />
-              <br />
+      
             <label htmlFor="">Email</label>
-              <input type="text" name="email" id="email" onChange={handleChange} value={data.email} />
-              <br />
+              <input type="email" name="email" id="email" onChange={handleChange} value={data.email} />
+    
             <label htmlFor="">PhoneNumber</label>
               <input type="number" name="phoneNumber" id="phoneNumber" onChange={handleChange} value={data.phoneNumber} />
-              <br />
+          
             <label htmlFor="">Password</label>
-              <input type="text" name="password" id="password" onChange={handleChange} value={data.password} />
-              <br />
+              <input type="password" name="password" id="password" onChange={handleChange} value={data.password} />
 
               <button type="submit">Register</button>
+              <button onClick={()=> navigate("/citizenLogin") }>Already Register? Login Here</button>
         </form>
+        </div>
     </>
   )
 }
