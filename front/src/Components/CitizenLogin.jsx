@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import './css/CitizenLogin.css'
+import './css/CitizenNavbar.css'
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function CitizenLogin() {
   const [data, setData] = useState({ email: "", password: "" });
@@ -23,13 +24,39 @@ export default function CitizenLogin() {
       });
 
       localStorage.setItem("citizen_token", response.data.token);
-      window.location = "/complaint";
+        toast.success("Login Successful", {
+                              position: "bottom-right",
+                              autoClose: 1000,
+                              hideProgressBar: false,
+                              closeOnClick: true,
+                              pauseOnHover: false,
+                              draggable: false,
+                              progress: undefined,
+                              theme: "dark",
+                          });
+
+      setTimeout(()=> window.location = "/complaint",1000);
+
+
+
+
     } catch (error) {
+          toast.error("Email or Password is invalid", {
+                        position: "bottom-right",
+                        autoClose: 1000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        draggable: false,
+                        progress: undefined,
+                        theme: "dark",
+                    });
       console.error("Error logging in:", error.response?.data || error.message);
     }
   };
 
   return (
+<>
      <form className = "mainDiv" onSubmit={handleSubmit}>
     <div className="container">
       <div className="top"></div>
@@ -57,5 +84,9 @@ export default function CitizenLogin() {
 
       </div>
     </div> </form>
+
+    <ToastContainer/>
+
+                </>
   );
 }
