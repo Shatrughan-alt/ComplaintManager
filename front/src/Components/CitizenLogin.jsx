@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import './css/CitizenLogin.css';
 
 export default function CitizenLogin() {
   const [data, setData] = useState({ email: "", password: "" });
@@ -31,19 +33,22 @@ export default function CitizenLogin() {
     }
   };
 
+  const navigate = useNavigate();
+  
   return (
     <>
+    <div className="citizen-login-wrapper">
+
     <h1>Citizen Login</h1>
       <form onSubmit={handleSubmit}>
         <label htmlFor="email">Email</label>
         <input
-          type="text"
+          type="email"
           name="email"
           id="email"
           onChange={handleChange}
           value={data.email}
         />
-        <br />
         <label htmlFor="password">Password</label>
         <input
           type="password"
@@ -52,9 +57,10 @@ export default function CitizenLogin() {
           onChange={handleChange}
           value={data.password}
         />
-        <br />
         <button type="submit">Login</button>
+        <button onClick={()=> navigate("/citizenRegister")}>Register</button>
       </form>
+      </div>
     </>
   );
 }

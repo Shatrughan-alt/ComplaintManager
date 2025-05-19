@@ -41,19 +41,19 @@ export default function LawEnforcementRegister() {
               <input type="text" name="policeStationName" id="policeStationName" onChange={handleChange} value={data.policeStationName} />
         <br />
         <label htmlFor="">Police Station Email</label>
-              <input type="text" name="policeStationEmail" id="policeStationEmail" onChange={handleChange} value={data.policeStationEmail} />
+              <input type="email" name="policeStationEmail" id="policeStationEmail" onChange={handleChange} value={data.policeStationEmail} />
         <br />
         <label htmlFor="">Police Station PhoneNumber</label>
               <input type="number" name="policeStationContactNo" id="policeStationContactNo" onChange={handleChange} value={data.policeStationContactNo} />
         <br />
               <label htmlFor="">Police Station SHO</label>
-              <input type="number" name="sho" id="sho" onChange={handleChange} value={data.sho} />
+              <input type="text" name="sho" id="sho" onChange={handleChange} value={data.sho} />
               <br />
               <label htmlFor="">Address</label>
-              <input type="number" name="address" id="address" onChange={handleChange} value={data.address} />
+              <input type="text" name="address" id="address" onChange={handleChange} value={data.address} />
               <br />
         <label htmlFor="">Password</label>
-        <input type="text" name="password" id="password" onChange={handleChange} value={data.password} />
+        <input type="password" name="password" id="password" onChange={handleChange} value={data.password} />
         <br />
 
     <button type="submit">Register</button>

@@ -2,7 +2,11 @@ import React from 'react';
 import { useState } from 'react';
 import axios from 'axios';
 
+import {useNavigate} from 'react-router-dom';
+
 export default function LawEnforcementLogin() {
+
+    const navigate = useNavigate();
     const [data, setData] = useState({ email: "", password: "" });
 
     const handleChange = (e) => {
@@ -36,7 +40,7 @@ export default function LawEnforcementLogin() {
           <form onSubmit={handleSubmit}>
               <label htmlFor="email">Email</label>
               <input
-                  type="text"
+                  type="email"
                   name="email"
                   id="email"
                   onChange={handleChange}
@@ -53,6 +57,7 @@ export default function LawEnforcementLogin() {
               />
               <br />
               <button type="submit">Login</button>
+              <button onClick={()=> navigate("/lawEnforcementRegister")} >Register</button>
           </form>
     </>
   )
