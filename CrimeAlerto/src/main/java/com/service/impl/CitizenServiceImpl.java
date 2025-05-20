@@ -50,6 +50,24 @@ public class CitizenServiceImpl implements CitizenService {
         return jwtUtil.generateToken(citizen.getEmail());
     }
 
+    @Override
+    public String fetchUUID(String email) {
+        String UUID = null;
+        
+        UUID = citizenRepository.getUUIDByEmail(email);
+        if(UUID == null){
+            throw new RuntimeException("User Not Found");
+        }
+
+        return UUID;
+    }
+
+    @Override
+    public Optional<Citizen> findById(Long citizenId) {
+        
+        return citizenRepository.findByUuid(citizenId);
+    }
+
     
 
     

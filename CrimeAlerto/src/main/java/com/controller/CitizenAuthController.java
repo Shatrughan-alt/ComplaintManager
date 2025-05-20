@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("/api/citizen")
-@CrossOrigin("http://localhost:5174")
+@CrossOrigin("http://localhost:5173")
 public class CitizenAuthController {
     private final CitizenService citizenService;
 
@@ -30,6 +30,7 @@ public class CitizenAuthController {
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> login(@RequestBody CitizenLogin CitizenLogin, HttpServletResponse response) {
         String token = citizenService.login(CitizenLogin);
+        String UUID = citizenService.fetchUUID(CitizenLogin.getEmail());
         Cookie cookie = new Cookie("auth_token", token);
         cookie.setHttpOnly(true);
         cookie.setPath("/");
@@ -39,6 +40,7 @@ public class CitizenAuthController {
         Map<String,String> res = new HashMap<>();
     res.put("message", "Login successful");
     res.put("token", token); 
+    res.put("UUID", UUID);
         return ResponseEntity.ok(res);
     }
 

@@ -63,8 +63,7 @@ Cookie: auth_token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwiaWF0IjoxNzQ2NTIxNjE0LCJl
 ### Create Complaint
 POST http://localhost:9090/api/complaints
 Content-Type: application/json
-Cookie: auth_token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJnbWFpbC5jb20iLCJpYXQiOjE3NDc0MTY0MzksImV4cCI6MTc0NzQ1MjQzOX0.YLVwdtiAryei-anIMpJ58lhZvWJrw2m6IIVoVUF3XWg
-
+Cookie: auth_token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJkaXBlc2hjaGFkZ2FsQGdtYWlsLmNvbSIsImlhdCI6MTc0NzcxOTYwOCwiZXhwIjoxNzQ3NzU1NjA4fQ.xDcN8VS4d-QjpqPVxBFI48ENkw3qZ2CIK28eya8Qogs
 {
     "title": "Theft Incident",
     "description": "A theft occurred at my residence.",
@@ -72,8 +71,8 @@ Cookie: auth_token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJnbWFpbC5jb20iLCJpYXQiOjE3NDc0
     "incidentLocationLat": 28.7041,
     "incidentLocationLong": 77.1025,
     "status": "Pending",
-    "witnessId": 1,
-    "assignedToId": 1
+    "witnessId": 4,
+    "assignedToId": 2
 }
 
 ### Find All Complaints

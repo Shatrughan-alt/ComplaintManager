@@ -18,7 +18,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http.cors().and().csrf().disable()
             .authorizeHttpRequests(auth -> auth
                 // Permit public endpoints for both citizens and law enforcement
                 .requestMatchers("/api/citizen/register", "/api/citizen/login").permitAll()
@@ -27,6 +27,7 @@ public class SecurityConfig {
                 // Role-based access control
                 .requestMatchers("/api/home","/api/complaints").hasAuthority("CITIZEN") // Only citizens can access /api/home
                 .requestMatchers("/api/test","/api/complaints/all").hasAuthority("LAW_ENFORCEMENT") // Only law enforcement can access /api/home/test
+                .requestMatchers("/api/citizen/*").hasAuthority("CITIZEN") // Only law enforcement can access /api/home/test
                 
                 // All other endpoints require authentication
                 .anyRequest().authenticated()
