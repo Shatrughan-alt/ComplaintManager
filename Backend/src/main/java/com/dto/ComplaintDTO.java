@@ -1,5 +1,6 @@
 package com.dto;
 
+import java.sql.Blob;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -12,7 +13,7 @@ public class ComplaintDTO {
     private String title;
     @NotEmpty(message = "Description cannot be empty")
     private String description;
-    private String supportingDocument;
+    private Blob supportingDocument;
     private Double incidentLocationLat;
     private Double incidentLocationLong;
     private String status;
@@ -46,14 +47,12 @@ public class ComplaintDTO {
         this.description = description;
     }
 
-    public String getSupportingDocument() {
+    public Blob getSupportingDocument() {
         return supportingDocument;
     }
-
-    public void setSupportingDocument(String supportingDocument) {
+    public void setSupportingDocument(Blob supportingDocument) {
         this.supportingDocument = supportingDocument;
     }
-
     public Double getIncidentLocationLat() {
         return incidentLocationLat;
     }
@@ -102,7 +101,7 @@ public class ComplaintDTO {
         this.assignedToId = assignedToId;
     }
 
-    public ComplaintDTO(Integer uuid, String title, String description, String supportingDocument,
+    public ComplaintDTO(Integer uuid, String title, String description, Blob supportingDocument,
             Double incidentLocationLat, Double incidentLocationLong, String status, LocalDateTime createdAt,
             Integer witnessId, Integer assignedToId) {
         this.title = title;

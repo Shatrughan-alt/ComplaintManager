@@ -1,6 +1,8 @@
 package com.entity;
 
 import jakarta.persistence.*;
+
+import java.sql.Blob;
 import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -21,7 +23,7 @@ public class Complaint {
     private String description;
 
     @Column(name = "supporting_Document")
-    private String supportingDocument;
+    private Blob supportingDocument;
 
     @Column(name = "incident_location_lat", nullable = false)
     private Double incidentLocationLat;
@@ -69,11 +71,11 @@ public class Complaint {
         this.description = description;
     }
 
-    public String getSupportingDocument() {
+    public Blob getSupportingDocument() {
         return supportingDocument;
     }
 
-    public void setSupportingDocument(String supportingDocument) {
+    public void setSupportingDocument(Blob supportingDocument) {
         this.supportingDocument = supportingDocument;
     }
 
