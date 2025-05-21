@@ -13,7 +13,7 @@ public class ComplaintDTO {
     private String title;
     @NotEmpty(message = "Description cannot be empty")
     private String description;
-    private Blob supportingDocument;
+    private String supportingDocument;
     private Double incidentLocationLat;
     private Double incidentLocationLong;
     private String status;
@@ -47,10 +47,10 @@ public class ComplaintDTO {
         this.description = description;
     }
 
-    public Blob getSupportingDocument() {
+    public String getSupportingDocument() {
         return supportingDocument;
     }
-    public void setSupportingDocument(Blob supportingDocument) {
+    public void setSupportingDocument(String supportingDocument) {
         this.supportingDocument = supportingDocument;
     }
     public Double getIncidentLocationLat() {
@@ -101,7 +101,7 @@ public class ComplaintDTO {
         this.assignedToId = assignedToId;
     }
 
-    public ComplaintDTO(Integer uuid, String title, String description, Blob supportingDocument,
+    public ComplaintDTO(Integer uuid, String title, String description, String supportingDocument,
             Double incidentLocationLat, Double incidentLocationLong, String status, LocalDateTime createdAt,
             Integer witnessId, Integer assignedToId) {
         this.title = title;

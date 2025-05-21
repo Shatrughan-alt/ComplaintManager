@@ -16,7 +16,8 @@ public class ComplaintMapper {
         complaint.setUuid(complaintDTO.getUuid());
         complaint.setTitle(complaintDTO.getTitle());
         complaint.setDescription(complaintDTO.getDescription());
-        complaint.setSupportingDocument(complaintDTO.getSupportingDocument());
+        // FIX: Do not set supportingDocument here, it is handled via MultipartFile in the service
+        // complaint.setSupportingDocument(complaintDTO.getSupportingDocument() != null ? "Uploaded" : null);
         complaint.setIncidentLocationLat(complaintDTO.getIncidentLocationLat());
         complaint.setIncidentLocationLong(complaintDTO.getIncidentLocationLong());
         complaint.setStatus(complaintDTO.getStatus());
@@ -45,7 +46,7 @@ public class ComplaintMapper {
         complaintDTO.setUuid(complaint.getUuid());
         complaintDTO.setTitle(complaint.getTitle());
         complaintDTO.setDescription(complaint.getDescription());
-        complaintDTO.setSupportingDocument(complaint.getSupportingDocument());
+       complaintDTO.setSupportingDocument(complaint.getSupportingDocument() != null ? "Uploaded" : null);
         complaintDTO.setIncidentLocationLat(complaint.getIncidentLocationLat());
         complaintDTO.setIncidentLocationLong(complaint.getIncidentLocationLong());
         complaintDTO.setStatus(complaint.getStatus());

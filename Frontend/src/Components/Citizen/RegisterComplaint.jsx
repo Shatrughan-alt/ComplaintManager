@@ -56,7 +56,7 @@ export const RegisterComplaint = () => {
     e.preventDefault();
     try {
       const url = "http://localhost:9090/api/complaints";
-      let payload = {
+      const complaintPayload = {
         ...data,
         witnessId: data.witnessId ? Number(data.witnessId) : undefined,
         assignedToId: data.assignedToId ? Number(data.assignedToId) : undefined,
@@ -64,27 +64,19 @@ export const RegisterComplaint = () => {
         incidentLocationLong: Number(data.incidentLocationLong)
       };
 
-      // If file is selected, use FormData for file upload
+      const formData = new FormData();
+      formData.append(
+        "complaint",
+        new Blob([JSON.stringify(complaintPayload)], { type: "application/json" })
+      );
       if (file) {
-        const formData = new FormData();
-        Object.entries(payload).forEach(([key, value]) => {
-          formData.append(key, value);
-        });
-        formData.append('file', file);
-        await axios.post(url, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          },
-          withCredentials: true
-        });
-      } else {
-        await axios.post(url, payload, {
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          withCredentials: true
-        });
+        formData.append("supportingDocument", file);
       }
+
+      await axios.post(url, formData, {
+        withCredentials: true
+        // Do NOT set Content-Type, let browser set it
+      });
 
       alert("Complaint registered successfully!");
       setData({

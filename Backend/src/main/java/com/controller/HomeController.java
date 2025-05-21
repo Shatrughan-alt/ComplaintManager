@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.dto.ComplaintDTO;
 import com.service.ComplaintService;
 
@@ -36,9 +38,12 @@ public class HomeController {
     }
 
     @PostMapping("/complaints")
-    public ResponseEntity<String> createComplaint(@RequestBody ComplaintDTO complaintDTO) {
+    public ResponseEntity<String> createComplaint(
+        @RequestPart("complaint") ComplaintDTO complaintDTO,
+        @RequestPart(value = "supportingDocument", required = false) MultipartFile supportingDocument) {
         System.out.println(complaintDTO);
-        complaintService.addComplaint(complaintDTO);
+        // Pass supportingDocument to your service if needed
+        complaintService.addComplaint(complaintDTO, supportingDocument);
         return ResponseEntity.ok("Complaint added successfully");
     }
 
