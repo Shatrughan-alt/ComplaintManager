@@ -1,0 +1,17 @@
+package com.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.entity.Citizen;
+import com.entity.Complaint;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import java.util.List;
+
+public interface ComplaintRepository extends JpaRepository<Complaint, Long> {
+
+
+    @Query("SELECT c FROM Complaint c WHERE c.witness = :citizenId")
+    List<Complaint> fetchComplaintWhereCitizenId(@Param("citizenId") Citizen citizenId);
+}
