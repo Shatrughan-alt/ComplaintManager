@@ -1,6 +1,5 @@
 package com.controller;
 
-import java.sql.Blob;
 import java.util.List;
 
 import org.springframework.core.io.Resource;
@@ -10,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import com.dto.ComplaintDTO;
-import com.entity.Complaint;
+
 import com.service.ComplaintService;
 
 import java.nio.file.Path;
@@ -74,7 +73,7 @@ public class HomeController {
         String filePath = complaintService.getUploadedDocument(complaintId);
         try {
             // Adjust the base directory as per your storage location
-            Path file = Paths.get("media").resolve(Paths.get(filePath).getFileName().toString());
+            Path file = Paths.get("src/media").resolve(Paths.get(filePath).getFileName().toString());
             Resource resource = new UrlResource(file.toUri());
             if (!resource.exists()) {
                 return ResponseEntity.notFound().build();
