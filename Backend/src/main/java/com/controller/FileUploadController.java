@@ -21,7 +21,7 @@ public class FileUploadController{
 
     @PostMapping("/upload")
     public ResponseEntity<Map<String, String>> uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
-        String uploadDir = "media"; // or "UploadedMedia"
+        String uploadDir = "src/media"; // or "UploadedMedia"
         File dir = new File(uploadDir);
         if (!dir.exists()) dir.mkdirs();
 
@@ -31,7 +31,7 @@ public class FileUploadController{
 
         // Return the relative URL/path to the frontend
         Map<String, String> response = new HashMap<>();
-        response.put("url", "/media/" + fileName);
+        response.put("url", "src/media/" + fileName);
         return ResponseEntity.ok(response);
     }
 } 
