@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom'
 
 export const RegisterComplaint = () => {
+  const navigate = useNavigate();
   const [data, setData] = useState({
     title: "",
     description: "",
@@ -102,6 +104,7 @@ export const RegisterComplaint = () => {
         assignedToId: ""
       });
       setFile(null);
+      navigate("/citizenDashboard");
     } catch (error) {
       alert("Error registering complaint: " + (error.response?.data || error.message));
     }

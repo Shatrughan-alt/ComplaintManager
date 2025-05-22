@@ -139,28 +139,31 @@ const ComplaintWithId = () => {
                 </div>
                 <div>
                   <span style={labelStyle}>Supporting Document:</span>
-                  {/* <span style={valueStyle}>{complaint.supportingDocument}</span> */}
-                  <button
-  onClick={() =>
-    window.open(`http://localhost:9090/api/complaints/${complaint.uuid}/download`, "_blank")
-  }
-  style={{
-    background: "#1976d2",
-    color: "#fff",
-    border: "none",
-    borderRadius: "6px",
-    padding: "8px 18px",
-    fontWeight: 600,
-    fontSize: "0.98rem",
-    cursor: "pointer",
-    marginLeft: 8,
-    marginTop: 4,
-    boxShadow: "0 1px 4px #1976d211",
-    transition: "background 0.2s"
-  }}
->
-  Download Uploaded File
-</button>
+                  {complaint.supportingDocument ? (
+                    <button
+                      onClick={() =>
+                        window.open(`http://localhost:9090/api/complaints/${complaint.uuid}/download`, "_blank")
+                      }
+                      style={{
+                        background: "#1976d2",
+                        color: "#fff",
+                        border: "none",
+                        borderRadius: "6px",
+                        padding: "8px 18px",
+                        fontWeight: 600,
+                        fontSize: "0.98rem",
+                        cursor: "pointer",
+                        marginLeft: 8,
+                        marginTop: 4,
+                        boxShadow: "0 1px 4px #1976d211",
+                        transition: "background 0.2s"
+                      }}
+                    >
+                      Download Uploaded File
+                    </button>
+                  ) : (
+                    <span style={valueStyle}>No file uploaded</span>
+                  )}
                 </div>
                 <div>
                   <span style={labelStyle}>Latitude:</span>
