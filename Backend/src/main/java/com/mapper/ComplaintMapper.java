@@ -16,7 +16,7 @@ public class ComplaintMapper {
         complaint.setUuid(complaintDTO.getUuid());
         complaint.setTitle(complaintDTO.getTitle());
         complaint.setDescription(complaintDTO.getDescription());
-complaint.setSupportingDocument(complaintDTO.getSupportingDocument());
+        complaint.setSupportingDocument(complaintDTO.getSupportingDocument());
         complaint.setIncidentLocationLat(complaintDTO.getIncidentLocationLat());
         complaint.setIncidentLocationLong(complaintDTO.getIncidentLocationLong());
         complaint.setStatus(complaintDTO.getStatus());
