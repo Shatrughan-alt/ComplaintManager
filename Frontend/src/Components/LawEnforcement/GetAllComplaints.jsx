@@ -48,22 +48,13 @@ export default function GetAllComplaints() {
   // Update complaint status
   async function handleStatusChange(complaintId, newStatus) {
     try {
-      console.log(newStatus);
-      const url = `http://localhost:9090/api/complaints/${complaintId}/status`;
-      const data = {
-        status: newStatus,
-      };
-      await axios.put(url,
-        data,
-        {
-          withCredentials : true
-        }
+      await axios.put(
+        `http://localhost:9090/api/complaints/${complaintId}/status`,
+        { status: newStatus },
+        { withCredentials: true }
       );
-
-      console.log(url)
       fetchComplaints();
     } catch (error) {
-      console.log(error)
       alert("Failed to update status");
     }
   }
@@ -89,7 +80,7 @@ export default function GetAllComplaints() {
   // --- Styling with animation ---
   const mainBg = {
     minHeight: "100vh",
-    background: "linear-gradient(120deg, #f8fafc 0%, #e3f0ff 100%)",
+    background: "linear-gradient(120deg, #f8fbff 0%, #e0f7fa 100%)",
     padding: "0",
     margin: "0",
     fontFamily: "Segoe UI, Arial, sans-serif"
@@ -97,45 +88,45 @@ export default function GetAllComplaints() {
 
   const header = {
     width: "100%",
-    background: "linear-gradient(90deg, #1976d2 60%, #21cbf3 100%)",
+    background: "linear-gradient(90deg, #4f8cff 0%, #43e97b 100%)",
     color: "#fff",
-    padding: "32px 0 22px 0",
+    padding: "36px 0 26px 0",
     textAlign: "center",
     fontWeight: 700,
-    fontSize: "2.2rem",
-    letterSpacing: "1.5px",
+    fontSize: "2.4rem",
+    letterSpacing: "2px",
     boxShadow: "0 4px 24px 0 rgba(31,38,135,0.09)",
-    marginBottom: "10px",
-    borderBottomLeftRadius: "24px",
-    borderBottomRightRadius: "24px"
+    marginBottom: "18px",
+    borderBottomLeftRadius: "28px",
+    borderBottomRightRadius: "28px"
   };
 
   const container = {
     maxWidth: 1300,
-    margin: "36px auto",
-    padding: "0 1.5rem"
+    margin: "56px auto 0 auto",
+    padding: "0 2rem"
   };
 
   const cardGrid = {
     display: "flex",
     flexWrap: "wrap",
-    gap: "2.5rem",
+    gap: "2.7rem",
     justifyContent: "flex-start"
   };
 
   const card = {
-    background: "rgba(255,255,255,0.95)",
-    borderRadius: "18px",
-    boxShadow: "0 8px 32px #1976d233",
-    padding: "2.2rem 2rem 1.7rem 2rem",
+    background: "rgba(255,255,255,0.98)",
+    borderRadius: "22px",
+    boxShadow: "0 8px 32px #4f8cff22",
+    padding: "2.4rem 2.1rem 1.9rem 2.1rem",
     minWidth: 340,
     maxWidth: 420,
     flex: "1 1 360px",
-    borderTop: "5px solid #1976d2",
+    borderTop: "6px solid #43e97b",
     display: "flex",
     flexDirection: "column",
-    gap: "0.9rem",
-    marginBottom: "1.5rem",
+    gap: "1.1rem",
+    marginBottom: "1.7rem",
     position: "relative",
     overflow: "hidden",
     animation: "fadeInUp 0.7s cubic-bezier(.39,.575,.56,1.000) both",
@@ -143,9 +134,9 @@ export default function GetAllComplaints() {
   };
 
   const label = {
-    color: "#1976d2",
+    color: "#4f8cff",
     fontWeight: 700,
-    fontSize: "1.07rem",
+    fontSize: "1.09rem",
     minWidth: 120,
     display: "inline-block",
     letterSpacing: "0.2px"
@@ -156,7 +147,7 @@ export default function GetAllComplaints() {
     fontWeight: 400,
     marginLeft: 6,
     wordBreak: "break-word",
-    fontSize: "1.07rem"
+    fontSize: "1.09rem"
   };
 
   const badge = (status) => ({
@@ -164,13 +155,15 @@ export default function GetAllComplaints() {
     padding: "4px 16px",
     borderRadius: "12px",
     background: status === "Pending"
-      ? "linear-gradient(90deg, #ffb3b3 0%, #ff5252 100%)"
-      : status === "Resolved"
-      ? "linear-gradient(90deg, #b2f7cc 0%, #388e3c 100%)"
-      : "linear-gradient(90deg, #ffe082 0%, #ff9800 100%)",
-    color: "#fff",
+      ? "linear-gradient(90deg, #f7971e 0%, #ffd200 100%)"
+      : status === "Accepted"
+      ? "linear-gradient(90deg, #56ab2f 0%, #a8e063 100%)"
+      : "linear-gradient(90deg, #e52d27 0%, #ff6a00 100%)",
+    color: status === "Pending"
+      ? "#222" // Dark text for better contrast on yellow
+      : "#fff", // White text for other statuses
     fontWeight: 700,
-    fontSize: "0.98rem",
+    fontSize: "1.01rem",
     marginLeft: 8,
     boxShadow: "0 1px 6px #0001"
   });
@@ -179,7 +172,7 @@ export default function GetAllComplaints() {
     display: "inline-flex",
     alignItems: "center",
     gap: 8,
-    background: "linear-gradient(90deg, #21cbf3 0%, #1976d2 100%)",
+    background: "linear-gradient(90deg, #43e97b 0%, #4f8cff 100%)",
     color: "#fff",
     fontWeight: 700,
     border: "none",
@@ -188,7 +181,7 @@ export default function GetAllComplaints() {
     marginLeft: 12,
     marginTop: 4,
     fontSize: "1rem",
-    boxShadow: "0 2px 8px #1976d233",
+    boxShadow: "0 2px 8px #4f8cff22",
     textDecoration: "none",
     letterSpacing: "0.5px",
     cursor: "pointer",
@@ -199,13 +192,13 @@ export default function GetAllComplaints() {
     position: "absolute",
     top: "-14px",
     right: "-48px",
-    background: "linear-gradient(90deg, #21cbf3 0%, #1976d2 100%)",
+    background: "linear-gradient(90deg, #43e97b 0%, #4f8cff 100%)",
     color: "#fff",
     fontWeight: 700,
-    fontSize: "0.95rem",
+    fontSize: "1.01rem",
     padding: "6px 48px",
     transform: "rotate(18deg)",
-    boxShadow: "0 2px 8px #1976d233"
+    boxShadow: "0 2px 8px #4f8cff22"
   };
 
   const dotsBg = {
@@ -216,7 +209,7 @@ export default function GetAllComplaints() {
     height: "100vh",
     zIndex: 0,
     pointerEvents: "none",
-    background: "radial-gradient(circle at 20% 30%, #1976d211 2%, transparent 60%), radial-gradient(circle at 80% 70%, #21cbf311 2%, transparent 60%)"
+    background: "radial-gradient(circle at 20% 30%, #4f8cff11 2%, transparent 60%), radial-gradient(circle at 80% 70%, #43e97b11 2%, transparent 60%)"
   };
 
   return (
@@ -311,11 +304,6 @@ export default function GetAllComplaints() {
                 }}>
                   {complaint.title || "Complaint"}
                 </h3>
-
-                 <div>
-                  <span style={label}>Complaint ID :</span>
-                  <span style={value}>{complaint.uuid}</span>
-                </div>
                 <div>
                   <span style={label}>Description:</span>
                   <span style={value}>{complaint.description}</span>
@@ -326,7 +314,7 @@ export default function GetAllComplaints() {
                     value={complaint.status || "Pending"}
                     style={{
                       ...badge(complaint.status),
-                      color: "#fff",
+                      color: "#666 ",
                       border: "none",
                       outline: "none",
                       fontWeight: 700,
@@ -336,9 +324,11 @@ export default function GetAllComplaints() {
                     }}
                     onChange={e => handleStatusChange(complaint.uuid, e.target.value)}
                   >
-                    <option value="Pending" style={{ color: "#ff5252" }}>Pending</option>
-                    <option value="Resolved" style={{ color: "#388e3c" }}>Resolved</option>
-                    <option value="Rejected" style={{ color: "#ff9800" }}>Rejected</option>
+                    <option value="Pending" style={{ color: "#b8860b" }}>Pending</option>
+<option value="In-Progress" style={{ color: "#1976d2" }}>In-Progress</option>
+<option value="Accepted" style={{ color: "#388e3c" }}>Accepted</option>
+<option value="Solved" style={{ color: "#6a1b9a" }}>Solved</option>
+<option value="Rejected" style={{ color: "#ff9800" }}>Rejected</option>
                   </select>
                 </div>
                 <div>
@@ -411,3 +401,18 @@ export default function GetAllComplaints() {
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

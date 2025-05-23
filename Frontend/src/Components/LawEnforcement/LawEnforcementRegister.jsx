@@ -1,65 +1,315 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export default function LawEnforcementRegister() {
-    const [data,setData]=useState({
-        policeStationName:"",
-        policeStationEmail:"",
-        policeStationContactNo:"",
-        sho:"",
-        address:"",
-        password:""
+    const [data, setData] = useState({
+        policeStationName: "",
+        policeStationEmail: "",
+        policeStationContactNo: "",
+        sho: "",
+        address: "",
+        password: ""
     });
+    const [error, setError] = useState("");
+    const cardRef = useRef(null);
+    const navigate = useNavigate();
 
-    const handleChange=(e)=>{
+    // Animate card on mount
+    useEffect(() => {
+        if (cardRef.current) {
+            cardRef.current.style.transform = "scale(1) rotateY(0deg)";
+            cardRef.current.style.opacity = "1";
+        }
+    }, []);
+
+    const handleChange = (e) => {
         setData({
             ...data,
-            [e.target.name]:e.target.value
+            [e.target.name]: e.target.value
         });
-        }
+        setError("");
+    }
 
-        const handleSubmit=async(e)=>{
-            e.preventDefault();
-            try {
-                const url="http://localhost:9090/api/lawEnforcement/register";
-                const response=await axios.post(url,data,{
-                    headers: {
-                        'Content-Type': 'application/json'
-                    }
-                });
-                console.log("Registration successful:", response.data);
-                window.location = "/lawEnforcementLogin"; 
-            } catch (error) {
-                console.error("Error logging in:", error.response?.data || error.message);
-            }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const url = "http://localhost:9090/api/lawEnforcement/register";
+            await axios.post(url, data, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            window.location = "/lawEnforcementLogin";
+        } catch (error) {
+            setError("Registration failed. Please check your details.");
         }
-  return (
-    <>
-    <h1>Law Enforcement Registration</h1>
-    <form action="" onSubmit={handleSubmit}>
-        <label htmlFor="">Police Station Name</label>
-              <input type="text" name="policeStationName" id="policeStationName" onChange={handleChange} value={data.policeStationName} />
-        <br />
-        <label htmlFor="">Police Station Email</label>
-              <input type="email" name="policeStationEmail" id="policeStationEmail" onChange={handleChange} value={data.policeStationEmail} />
-        <br />
-        <label htmlFor="">Police Station PhoneNumber</label>
-              <input type="number" name="policeStationContactNo" id="policeStationContactNo" onChange={handleChange} value={data.policeStationContactNo} />
-        <br />
-              <label htmlFor="">Police Station SHO</label>
-              <input type="text" name="sho" id="sho" onChange={handleChange} value={data.sho} />
-              <br />
-              <label htmlFor="">Address</label>
-              <input type="text" name="address" id="address" onChange={handleChange} value={data.address} />
-              <br />
-        <label htmlFor="">Password</label>
-        <input type="password" name="password" id="password" onChange={handleChange} value={data.password} />
-        <br />
+    }
 
-    <button type="submit">Register</button>
-          </form>
-    </>
-  )
+    // --- Styling for grid layout ---
+    const bgStyle = {
+        minHeight: "100vh",
+        background: "linear-gradient(120deg, #0f2027 0%, #2c5364 100%)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        fontFamily: "Montserrat, Segoe UI, Arial, sans-serif",
+        overflow: "hidden",
+        position: "relative"
+    };
+
+    const floatingShapes = {
+        position: "absolute",
+        width: "100vw",
+        height: "100vh",
+        zIndex: 0,
+        pointerEvents: "none",
+        overflow: "hidden"
+    };
+
+    const cardStyle = {
+        background: "linear-gradient(120deg, #f8fafc 60%, #e0eafc 100%)",
+        borderRadius: "2.5rem",
+        boxShadow: "0 12px 48px #0f202755, 0 2px 12px #2c536422",
+        padding: "2.5rem 2.5rem 2.2rem 2.5rem",
+        minWidth: 600,
+        maxWidth: 700,
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: "1.2rem",
+        position: "relative",
+        zIndex: 2,
+        transform: "scale(0.9) rotateY(20deg)",
+        opacity: 0,
+        transition: "transform 1s cubic-bezier(.39,.575,.56,1.000), opacity 1s cubic-bezier(.39,.575,.56,1.000)"
+    };
+
+    const titleStyle = {
+        fontWeight: 900,
+        fontSize: "2.1rem",
+        letterSpacing: "2px",
+        color: "#0f2027",
+        marginBottom: "0.7rem",
+        textShadow: "0 2px 12px #e0eafc88"
+    };
+
+    const formGrid = {
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr",
+        gap: "1.2rem 2.2rem",
+        width: "100%",
+        marginBottom: "1.2rem"
+    };
+
+    const labelStyle = {
+        color: "#2c5364",
+        fontWeight: 600,
+        fontSize: "1.08rem",
+        marginBottom: "0.2rem",
+        alignSelf: "flex-start"
+    };
+
+    const inputStyle = {
+        width: "100%",
+        padding: "12px 18px",
+        borderRadius: "1.1rem",
+        border: "1.5px solid #b2bec3",
+        fontSize: "1.08rem",
+        outline: "none",
+        background: "#f7faff",
+        transition: "border 0.2s, box-shadow 0.2s, background 0.3s"
+    };
+
+    const inputFocusStyle = {
+        border: "1.5px solid #36d1c4",
+        background: "#e0f7fa",
+        boxShadow: "0 2px 12px #36d1c422"
+    };
+
+    const buttonStyle = {
+        width: "100%",
+        padding: "13px 0",
+        borderRadius: "1.3rem",
+        border: "none",
+        background: "linear-gradient(90deg, #36d1c4 0%, #5b86e5 100%)",
+        color: "#fff",
+        fontWeight: 800,
+        fontSize: "1.15rem",
+        letterSpacing: "1.2px",
+        marginTop: "0.5rem",
+        marginBottom: "0.2rem",
+        cursor: "pointer",
+        boxShadow: "0 2px 16px #36d1c433",
+        transition: "background 0.2s, transform 0.2s, box-shadow 0.2s"
+    };
+
+    const buttonAltStyle = {
+        ...buttonStyle,
+        background: "linear-gradient(90deg, #0f2027 0%, #2c5364 100%)",
+        color: "#fff",
+        marginTop: "0.2rem"
+    };
+
+    // Button hover effect
+    function handleBtnHover(e) {
+        e.currentTarget.style.transform = "scale(1.04)";
+        e.currentTarget.style.boxShadow = "0 4px 24px #36d1c455";
+        e.currentTarget.style.background = "linear-gradient(90deg, #5b86e5 0%, #36d1c4 100%)";
+    }
+    function handleBtnLeave(e) {
+        e.currentTarget.style.transform = "scale(1)";
+        e.currentTarget.style.boxShadow = buttonStyle.boxShadow;
+        e.currentTarget.style.background = buttonStyle.background;
+    }
+    function handleAltBtnHover(e) {
+        e.currentTarget.style.transform = "scale(1.04)";
+        e.currentTarget.style.boxShadow = "0 4px 24px #0f202755";
+        e.currentTarget.style.background = "linear-gradient(90deg, #2c5364 0%, #0f2027 100%)";
+    }
+    function handleAltBtnLeave(e) {
+        e.currentTarget.style.transform = "scale(1)";
+        e.currentTarget.style.boxShadow = buttonAltStyle.boxShadow;
+        e.currentTarget.style.background = buttonAltStyle.background;
+    }
+
+    // For input focus effect
+    const [focus, setFocus] = useState({
+        policeStationName: false,
+        policeStationEmail: false,
+        policeStationContactNo: false,
+        sho: false,
+        address: false,
+        password: false
+    });
+
+    return (
+        <div style={bgStyle}>
+            <div style={floatingShapes}>
+                <svg width="100vw" height="100vh">
+                    <circle cx="120" cy="140" r="70" fill="#36d1c422">
+                        <animate attributeName="cy" values="140;200;140" dur="6s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="90%" cy="100" r="50" fill="#5b86e522">
+                        <animate attributeName="cy" values="100;160;100" dur="7s" repeatCount="indefinite" />
+                    </circle>
+                    <rect x="80%" y="80%" width="90" height="90" rx="45" fill="#0f202711">
+                        <animate attributeName="x" values="80%;85%;80%" dur="8s" repeatCount="indefinite" />
+                    </rect>
+                    <ellipse cx="50%" cy="90%" rx="70" ry="30" fill="#e94e7711">
+                        <animate attributeName="rx" values="70;90;70" dur="9s" repeatCount="indefinite" />
+                    </ellipse>
+                </svg>
+            </div>
+            <form
+                ref={cardRef}
+                style={cardStyle}
+                onSubmit={handleSubmit}
+                autoComplete="off"
+            >
+                <div style={titleStyle}>Law Enforcement Register</div>
+                {error && <div style={{ color: "#e94e77", fontWeight: 700, fontSize: "1.05rem", marginBottom: "0.5rem" }}>{error}</div>}
+                <div style={formGrid}>
+                    <div>
+                        <div style={labelStyle}>Police Station Name</div>
+                        <input
+                            type="text"
+                            name="policeStationName"
+                            style={focus.policeStationName ? { ...inputStyle, ...inputFocusStyle } : inputStyle}
+                            onFocus={() => setFocus(f => ({ ...f, policeStationName: true }))}
+                            onBlur={() => setFocus(f => ({ ...f, policeStationName: false }))}
+                            onChange={handleChange}
+                            value={data.policeStationName}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <div style={labelStyle}>Police Station Email</div>
+                        <input
+                            type="email"
+                            name="policeStationEmail"
+                            style={focus.policeStationEmail ? { ...inputStyle, ...inputFocusStyle } : inputStyle}
+                            onFocus={() => setFocus(f => ({ ...f, policeStationEmail: true }))}
+                            onBlur={() => setFocus(f => ({ ...f, policeStationEmail: false }))}
+                            onChange={handleChange}
+                            value={data.policeStationEmail}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <div style={labelStyle}>Phone Number</div>
+                        <input
+                            type="number"
+                            name="policeStationContactNo"
+                            style={focus.policeStationContactNo ? { ...inputStyle, ...inputFocusStyle } : inputStyle}
+                            onFocus={() => setFocus(f => ({ ...f, policeStationContactNo: true }))}
+                            onBlur={() => setFocus(f => ({ ...f, policeStationContactNo: false }))}
+                            onChange={handleChange}
+                            value={data.policeStationContactNo}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <div style={labelStyle}>SHO</div>
+                        <input
+                            type="text"
+                            name="sho"
+                            style={focus.sho ? { ...inputStyle, ...inputFocusStyle } : inputStyle}
+                            onFocus={() => setFocus(f => ({ ...f, sho: true }))}
+                            onBlur={() => setFocus(f => ({ ...f, sho: false }))}
+                            onChange={handleChange}
+                            value={data.sho}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <div style={labelStyle}>Address</div>
+                        <input
+                            type="text"
+                            name="address"
+                            style={focus.address ? { ...inputStyle, ...inputFocusStyle } : inputStyle}
+                            onFocus={() => setFocus(f => ({ ...f, address: true }))}
+                            onBlur={() => setFocus(f => ({ ...f, address: false }))}
+                            onChange={handleChange}
+                            value={data.address}
+                            required
+                        />
+                    </div>
+                    <div>
+                        <div style={labelStyle}>Password</div>
+                        <input
+                            type="password"
+                            name="password"
+                            style={focus.password ? { ...inputStyle, ...inputFocusStyle } : inputStyle}
+                            onFocus={() => setFocus(f => ({ ...f, password: true }))}
+                            onBlur={() => setFocus(f => ({ ...f, password: false }))}
+                            onChange={handleChange}
+                            value={data.password}
+                            required
+                        />
+                    </div>
+                </div>
+                <button
+                    type="submit"
+                    style={buttonStyle}
+                    onMouseEnter={handleBtnHover}
+                    onMouseLeave={handleBtnLeave}
+                >
+                    Register
+                </button>
+                <button
+                    type="button"
+                    style={buttonAltStyle}
+                    onClick={() => navigate("/lawEnforcementLogin")}
+                    onMouseEnter={handleAltBtnHover}
+                    onMouseLeave={handleAltBtnLeave}
+                >
+                    Go to Login
+                </button>
+            </form>
+        </div>
+    )
 }
 
 
