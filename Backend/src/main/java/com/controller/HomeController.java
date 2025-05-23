@@ -90,7 +90,7 @@ public class HomeController {
     }
 
 
-@PutMapping("/api/complaints/{complaintId}/status")
+@PutMapping("/complaints/{complaintId}/status")
 public ResponseEntity<?> updateStatus(@PathVariable Integer complaintId, @RequestBody Map<String, String> body) {
     try {
         String newStatus = body.get("status");

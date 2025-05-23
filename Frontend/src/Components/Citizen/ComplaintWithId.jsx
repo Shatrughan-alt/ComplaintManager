@@ -38,7 +38,18 @@ const valueStyle = {
 };
 
 const statusStyle = (status) => ({
-  color: status === "Pending" ? "#ff9800" : "#388e3c",
+  color:
+    status === "Pending"
+      ? "#fbc02d" // yellow
+      : status === "Solved"
+      ? "#388e3c" // green
+      : status === "Rejected"
+      ? "#e53935" // red
+      : status === "In-Progress"
+      ? "#1976d2" // blue
+      : status === "Accepted"
+      ? "#26a69a" // teal
+      : "#555",
   fontWeight: 700,
   letterSpacing: "1px",
   fontSize: "1rem",
