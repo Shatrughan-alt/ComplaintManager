@@ -48,13 +48,22 @@ export default function GetAllComplaints() {
   // Update complaint status
   async function handleStatusChange(complaintId, newStatus) {
     try {
-      await axios.put(
-        `http://localhost:9090/api/complaints/${complaintId}/status`,
-        { status: newStatus },
-        { withCredentials: true }
+      console.log(newStatus);
+      const url = `http://localhost:9090/api/complaints/${complaintId}/status`;
+      const data = {
+        status: newStatus,
+      };
+      await axios.put(url,
+        data,
+        {
+          withCredentials : true
+        }
       );
+
+      console.log(url)
       fetchComplaints();
     } catch (error) {
+      console.log(error)
       alert("Failed to update status");
     }
   }
@@ -302,6 +311,11 @@ export default function GetAllComplaints() {
                 }}>
                   {complaint.title || "Complaint"}
                 </h3>
+
+                 <div>
+                  <span style={label}>Complaint ID :</span>
+                  <span style={value}>{complaint.uuid}</span>
+                </div>
                 <div>
                   <span style={label}>Description:</span>
                   <span style={value}>{complaint.description}</span>
@@ -320,7 +334,7 @@ export default function GetAllComplaints() {
                       background: "none",
                       cursor: "pointer"
                     }}
-                    onChange={e => handleStatusChange(complaint.complaintId, e.target.value)}
+                    onChange={e => handleStatusChange(complaint.uuid, e.target.value)}
                   >
                     <option value="Pending" style={{ color: "#ff5252" }}>Pending</option>
                     <option value="Resolved" style={{ color: "#388e3c" }}>Resolved</option>
