@@ -1,0 +1,42 @@
+API DOCUMENTATION 
+
+
+CITIZEN 
+
+/api/citizen/register
+
+{
+    "name" : "Dipesh Singh",
+    "email" : "dipeshchadgal10@gmail.com",
+    "phoneNumber" : 873249234612,
+    "password" : "ThisIsMyPassword"
+}
+s
+/api/citizen/login
+
+{
+    "email" : "dipeshchadgal10@gmail.com",
+    "password" : "ThisIsMyPassword"
+}
+
+
+
+Law Enforcement
+
+/api/lawEnforcement/register
+
+{
+  "policeStationName" : name,
+  "policeStationEmail" : police@police.com,
+  "policeStationContactNo" : 342343242342
+  "sho" : "SHO Prem Singh",
+  "address" : "This is the Address",
+  "password" : "password"
+}
+
+/api/lawEnforcement/login
+
+{
+  "email" : police@police.com,
+  "password" : "password"
+}
