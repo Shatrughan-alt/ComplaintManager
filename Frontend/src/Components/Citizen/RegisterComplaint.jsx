@@ -122,7 +122,7 @@ export const RegisterComplaint = () => {
   };
 
   const card = {
-    maxWidth: 420,
+    maxWidth: 1000,
     width: "100%",
     margin: "48px auto 0 auto",
     background: "#fff",
@@ -188,7 +188,7 @@ export const RegisterComplaint = () => {
     cursor: "pointer",
     position: "absolute",
     right: "28px",
-    bottom: "24px",
+    bottom: "25px",
     boxShadow: "0 1px 4px #1976d211",
     letterSpacing: "0.5px",
     transition: "background 0.2s"
@@ -310,6 +310,13 @@ export const RegisterComplaint = () => {
         </label>
         <button type="submit" style={submitBtn}>
           Submit
+        </button>
+        <button
+          type="button"
+          style={{ ...submitBtn, background: "#888", right: "160px" }}
+          onClick={() => navigate("/citizenDashboard")}
+        >
+          Go to Dashboard
         </button>
       </form>
       <footer

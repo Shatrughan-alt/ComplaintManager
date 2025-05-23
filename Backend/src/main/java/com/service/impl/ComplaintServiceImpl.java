@@ -53,7 +53,7 @@ public class ComplaintServiceImpl implements ComplaintService {
     @Override
     public ComplaintDTO getComplaintById(Integer complaintId) {
 
-        Complaint complaint = complaintRepository.getByComplaintId(complaintId).orElseThrow(() -> new RuntimeException("No Complaint found it ID : " + complaintId));
+        Complaint complaint = complaintRepository.findById(complaintId).orElseThrow(() -> new RuntimeException("No Complaint found it ID : " + complaintId));
 
         return complaintMapper.toDTO(complaint);
     }

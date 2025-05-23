@@ -3,6 +3,7 @@ package com.config;
 import com.authenticator.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,6 +25,8 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
                              "/api/lawEnforcement/register", "/api/lawEnforcement/login").permitAll()
 
             .requestMatchers("/api/test", "/api/complaints/all").hasAuthority("LAW_ENFORCEMENT")
+
+            .requestMatchers(HttpMethod.PUT, "/api/complaints/*/status").hasAuthority("LAW_ENFORCEMENT")
 
             .requestMatchers("/api/home", "/api/complaints/*", "/api/citizen/*").hasAuthority("CITIZEN")
 
