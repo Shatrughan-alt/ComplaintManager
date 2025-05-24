@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export default function GetAllComplaints() {
   const [complaints, setComplaints] = useState([]);
   const [allComplaints, setAllComplaints] = useState([]);
-  const [addresses, setAddresses] = useState({});
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("law_token");
@@ -14,23 +15,6 @@ export default function GetAllComplaints() {
   useEffect(() => {
     fetchComplaints();
   }, []);
-
-  useEffect(() => {
-    // Fetch addresses for all complaints
-    async function fetchAddresses() {
-      const newAddresses = {};
-      for (const c of complaints) {
-        if (c.incidentLocationLat && c.incidentLocationLong) {
-          newAddresses[c.complaintId] = await getAddressFromLatLng(
-            c.incidentLocationLat,
-            c.incidentLocationLong
-          );
-        }
-      }
-      setAddresses(newAddresses);
-    }
-    if (complaints.length > 0) fetchAddresses();
-  }, [complaints]);
 
   async function fetchComplaints() {
     try {
@@ -45,219 +29,147 @@ export default function GetAllComplaints() {
     }
   }
 
-  // Update complaint status
-  async function handleStatusChange(complaintId, newStatus) {
-    try {
-      await axios.put(
-        `http://localhost:9090/api/complaints/${complaintId}/status`,
-        { status: newStatus },
-        { withCredentials: true }
-      );
-      fetchComplaints();
-    } catch (error) {
-      alert("Failed to update status");
-    }
-  }
-
-  async function getAddressFromLatLng(lat, lng) {
-    try {
-      const response = await axios.get(
-        `https://nominatim.openstreetmap.org/reverse`,
-        {
-          params: {
-            lat,
-            lon: lng,
-            format: "json"
-          }
-        }
-      );
-      return response.data.display_name;
-    } catch (error) {
-      return `${lat}, ${lng}`;
-    }
-  }
-
-  // --- Styling with animation ---
+  // --- Styling ---
   const mainBg = {
     minHeight: "100vh",
-    background: "linear-gradient(120deg, #f8fbff 0%, #e0f7fa 100%)",
-    padding: "0",
-    margin: "0",
+    background: "#f6f8fa",
+    padding: 0,
+    margin: 0,
     fontFamily: "Segoe UI, Arial, sans-serif"
   };
 
-  const header = {
+  const navbar = {
     width: "100%",
-    background: "linear-gradient(90deg, #4f8cff 0%, #43e97b 100%)",
+    background: "#1976d2",
     color: "#fff",
-    padding: "36px 0 26px 0",
-    textAlign: "center",
+    padding: "0",
+    margin: 0,
+    boxShadow: "0 2px 8px #1976d233",
+    borderBottom: "1px solid #e0e0e0",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    position: "sticky",
+    top: 0,
+    zIndex: 200
+  };
+
+  const navLeft = {
+    display: "flex",
+    alignItems: "center",
+    padding: "0 2.5rem",
+    height: "70px"
+  };
+
+  const navTitle = {
     fontWeight: 700,
-    fontSize: "2.4rem",
-    letterSpacing: "2px",
-    boxShadow: "0 4px 24px 0 rgba(31,38,135,0.09)",
-    marginBottom: "18px",
-    borderBottomLeftRadius: "28px",
-    borderBottomRightRadius: "28px"
+    fontSize: "1.45rem",
+    letterSpacing: "1px",
+    color: "#fff",
+    marginRight: 24
+  };
+
+  const navDate = {
+    fontSize: "1rem",
+    fontWeight: 400,
+    color: "#e3f0ff"
+  };
+
+  const navRight = {
+    display: "flex",
+    alignItems: "center",
+    padding: "0 2.5rem"
+  };
+
+  const logoutBtn = {
+    background: "#d32f2f",
+    color: "#fff",
+    border: "none",
+    borderRadius: "6px",
+    padding: "9px 24px",
+    fontWeight: 600,
+    fontSize: "1rem",
+    cursor: "pointer",
+    marginLeft: 18,
+    boxShadow: "0 1px 4px #d32f2f11",
+    transition: "background 0.2s"
   };
 
   const container = {
-    maxWidth: 1300,
-    margin: "56px auto 0 auto",
-    padding: "0 2rem"
+    maxWidth: 1100,
+    margin: "36px auto 0 auto",
+    padding: "0 1rem"
   };
 
-  const cardGrid = {
-    display: "flex",
-    flexWrap: "wrap",
-    gap: "2.7rem",
-    justifyContent: "flex-start"
+  const tableStyle = {
+    width: "100%",
+    borderCollapse: "separate",
+    borderSpacing: 0,
+    background: "#fff",
+    borderRadius: "10px",
+    boxShadow: "0 2px 12px #00000010",
+    overflow: "hidden"
   };
 
-  const card = {
-    background: "rgba(255,255,255,0.98)",
-    borderRadius: "22px",
-    boxShadow: "0 8px 32px #4f8cff22",
-    padding: "2.4rem 2.1rem 1.9rem 2.1rem",
-    minWidth: 340,
-    maxWidth: 420,
-    flex: "1 1 360px",
-    borderTop: "6px solid #43e97b",
-    display: "flex",
-    flexDirection: "column",
-    gap: "1.1rem",
-    marginBottom: "1.7rem",
-    position: "relative",
-    overflow: "hidden",
-    animation: "fadeInUp 0.7s cubic-bezier(.39,.575,.56,1.000) both",
-    transition: "box-shadow 0.3s, transform 0.3s, border-color 0.3s"
-  };
-
-  const label = {
-    color: "#4f8cff",
+  const thStyle = {
+    background: "#f4f6fb",
+    color: "#1976d2",
     fontWeight: 700,
-    fontSize: "1.09rem",
-    minWidth: 120,
-    display: "inline-block",
-    letterSpacing: "0.2px"
-  };
-
-  const value = {
-    color: "#222",
-    fontWeight: 400,
-    marginLeft: 6,
-    wordBreak: "break-word",
-    fontSize: "1.09rem"
-  };
-
-  const badge = (status) => ({
-    display: "inline-block",
-    padding: "4px 16px",
-    borderRadius: "12px",
-    background: status === "Pending"
-      ? "linear-gradient(90deg, #f7971e 0%, #ffd200 100%)"
-      : status === "Accepted"
-      ? "linear-gradient(90deg, #56ab2f 0%, #a8e063 100%)"
-      : "linear-gradient(90deg, #e52d27 0%, #ff6a00 100%)",
-    color: status === "Pending"
-      ? "#222" // Dark text for better contrast on yellow
-      : "#fff", // White text for other statuses
-    fontWeight: 700,
-    fontSize: "1.01rem",
-    marginLeft: 8,
-    boxShadow: "0 1px 6px #0001"
-  });
-
-  const downloadBtn = {
-    display: "inline-flex",
-    alignItems: "center",
-    gap: 8,
-    background: "linear-gradient(90deg, #43e97b 0%, #4f8cff 100%)",
-    color: "#fff",
-    fontWeight: 700,
-    border: "none",
-    borderRadius: "24px",
-    padding: "10px 32px",
-    marginLeft: 12,
-    marginTop: 4,
     fontSize: "1rem",
-    boxShadow: "0 2px 8px #4f8cff22",
-    textDecoration: "none",
-    letterSpacing: "0.5px",
+    padding: "14px 10px",
+    borderBottom: "2px solid #e0e0e0",
+    textAlign: "center",
+    letterSpacing: "0.5px"
+  };
+
+  const tdStyle = {
+    padding: "12px 10px",
+    borderBottom: "1px solid #e0e0e0",
+    fontSize: "1rem",
+    textAlign: "center",
+    color: "#222",
+    verticalAlign: "top",
     cursor: "pointer",
-    transition: "background 0.2s, transform 0.2s, box-shadow 0.2s"
+    background: "#fff"
   };
 
-  const ribbon = {
-    position: "absolute",
-    top: "-14px",
-    right: "-48px",
-    background: "linear-gradient(90deg, #43e97b 0%, #4f8cff 100%)",
-    color: "#fff",
+  const idStyle = {
+    ...tdStyle,
+    color: "#1976d2",
     fontWeight: 700,
-    fontSize: "1.01rem",
-    padding: "6px 48px",
-    transform: "rotate(18deg)",
-    boxShadow: "0 2px 8px #4f8cff22"
-  };
-
-  const dotsBg = {
-    position: "fixed",
-    top: 0,
-    left: 0,
-    width: "100vw",
-    height: "100vh",
-    zIndex: 0,
-    pointerEvents: "none",
-    background: "radial-gradient(circle at 20% 30%, #4f8cff11 2%, transparent 60%), radial-gradient(circle at 80% 70%, #43e97b11 2%, transparent 60%)"
+    fontFamily: "monospace"
   };
 
   return (
     <div style={mainBg}>
-      <div style={dotsBg}></div>
-      <div style={header}>
-        <span style={{ letterSpacing: "2px" }}>All Complaints (Law Enforcement)</span>
-        <span style={{
-          float: "right",
-          fontSize: "1.1rem",
-          fontWeight: 400,
-          marginRight: "2.5rem",
-          color: "#e3f0ff"
-        }}>
-          {new Date().toLocaleDateString()}
-        </span>
-      </div>
+      <nav style={navbar}>
+        <div style={navLeft}>
+          <span style={navTitle}>All Complaints (Law Enforcement)</span>
+          <span style={navDate}>{new Date().toLocaleDateString()}</span>
+        </div>
+        <div style={navRight}>
+          <button onClick={handleLogout} style={logoutBtn}>
+            Log Out
+          </button>
+        </div>
+      </nav>
       <div style={container}>
-        <button onClick={handleLogout} style={{
-          background: "linear-gradient(90deg, #d32f2f 60%, #ff6f00 100%)",
-          color: "#fff",
-          border: "none",
-          borderRadius: "8px",
-          padding: "12px 34px",
-          fontWeight: 700,
-          fontSize: "1.08rem",
-          cursor: "pointer",
-          margin: "18px 0 36px 0",
-          boxShadow: "0 2px 8px #d32f2f22",
-          transition: "background 0.2s, transform 0.2s",
-          outline: "none"
-        }}>Log Out</button>
         <div style={{
           display: "flex",
           alignItems: "center",
           marginBottom: "18px",
-          gap: 18
+          gap: 14
         }}>
           <input
             type="text"
-            placeholder="🔍 Search by title or status..."
+            placeholder="Search by title or status..."
             style={{
-              padding: "10px 18px",
-              borderRadius: "8px",
+              padding: "8px 14px",
+              borderRadius: "6px",
               border: "1px solid #1976d2",
-              fontSize: "1.08rem",
+              fontSize: "1rem",
               outline: "none",
-              width: 320,
+              width: 260,
               marginRight: 8
             }}
             onChange={e => {
@@ -271,115 +183,59 @@ export default function GetAllComplaints() {
               );
             }}
           />
-          <span style={{ color: "#1976d2", fontWeight: 600, fontSize: "1.08rem" }}>
+          <span style={{ color: "#1976d2", fontWeight: 500, fontSize: "1rem" }}>
             Total: {complaints.length}
           </span>
         </div>
         {complaints.length === 0 ? (
-          <p style={{ color: "#888", textAlign: "center", fontSize: "1.15rem" }}>No complaints found.</p>
+          <p style={{ color: "#888", textAlign: "center", fontSize: "1.08rem" }}>No complaints found.</p>
         ) : (
-          <div style={cardGrid}>
-            {complaints.map((complaint, idx) => (
-              <div
-                key={complaint.complaintId || idx}
-                style={card}
-                onMouseEnter={e => Object.assign(e.currentTarget.style, {
-                  boxShadow: "0 16px 48px #1976d244, 0 2px 8px #1976d211",
-                  transform: "translateY(-8px) scale(1.035)",
-                  borderTop: "5px solid #21cbf3"
-                })}
-                onMouseLeave={e => Object.assign(e.currentTarget.style, card)}
-              >
-                {complaint.status === "Pending" && (
-                  <div style={ribbon}>NEW</div>
-                )}
-                <h3 style={{
-                  margin: "0 0 1.2rem 0",
-                  color: "#1976d2",
-                  fontWeight: 800,
-                  fontSize: "1.35rem",
-                  letterSpacing: "0.7px",
-                  borderBottom: "1px solid #e3e8ee",
-                  paddingBottom: "0.5rem"
-                }}>
-                  {complaint.title || "Complaint"}
-                </h3>
-                <div>
-                  <span style={label}>Description:</span>
-                  <span style={value}>{complaint.description}</span>
-                </div>
-                <div>
-                  <span style={label}>Status:</span>
-                  <select
-                    value={complaint.status || "Pending"}
+          <div style={{ overflowX: "auto" }}>
+            <table style={tableStyle}>
+              <thead>
+                <tr>
+                  <th style={thStyle}>Complaint ID</th>
+                  <th style={thStyle}>Title</th>
+                  <th style={thStyle}>Status</th>
+                  <th style={thStyle}>Created</th>
+                  <th style={thStyle}>Assigned To</th>
+                </tr>
+              </thead>
+              <tbody>
+                {complaints.map((complaint, idx) => (
+                  <tr
+                    key={complaint.complaintId || idx}
                     style={{
-                      ...badge(complaint.status),
-                      color: "#666 ",
-                      border: "none",
-                      outline: "none",
-                      fontWeight: 700,
-                      fontSize: "0.98rem",
-                      background: "none",
-                      cursor: "pointer"
+                      transition: "background 0.15s",
+                      cursor: "pointer",
+                      background: idx % 2 === 0 ? "#f9fbfd" : "#fff"
                     }}
-                    onChange={e => handleStatusChange(complaint.uuid, e.target.value)}
+                    onClick={() => navigate(`/getDetailedComplaint/${complaint.uuid}`)}
                   >
-                    <option value="Pending" style={{ color: "#b8860b" }}>Pending</option>
-<option value="In-Progress" style={{ color: "#1976d2" }}>In-Progress</option>
-<option value="Accepted" style={{ color: "#388e3c" }}>Accepted</option>
-<option value="Solved" style={{ color: "#6a1b9a" }}>Solved</option>
-<option value="Rejected" style={{ color: "#ff9800" }}>Rejected</option>
-                  </select>
-                </div>
-                <div>
-                  <span style={label}>Supporting Document:</span>
-                  {complaint.supportingDocument ? (
-                    <a
-                      href={`http://localhost:9090/api/complaints/${complaint.uuid}/download`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={downloadBtn}
-                      onMouseEnter={e => {
-                        e.target.style.background = "linear-gradient(90deg, #1976d2 0%, #21cbf3 100%)";
-                        e.target.style.transform = "scale(1.09)";
-                        e.target.style.boxShadow = "0 8px 32px #1976d244";
-                      }}
-                      onMouseLeave={e => {
-                        e.target.style.background = "linear-gradient(90deg, #21cbf3 0%, #1976d2 100%)";
-                        e.target.style.transform = "scale(1)";
-                        e.target.style.boxShadow = "0 2px 8px #1976d233";
-                      }}
-                    >
-                      <svg width="20" height="20" fill="none" viewBox="0 0 20 20">
-                        <path fill="#fff" d="M10 2a1 1 0 0 1 1 1v8.586l2.293-2.293a1 1 0 1 1 1.414 1.414l-4 4a1 1 0 0 1-1.414 0l-4-4A1 1 0 1 1 5.707 9.293L8 11.586V3a1 1 0 0 1 1-1Z"/>
-                        <rect x="3" y="16" width="14" height="2" rx="1" fill="#fff" opacity="0.6"/>
-                      </svg>
-                      Download
-                    </a>
-                  ) : (
-                    <span style={value}>No file uploaded</span>
-                  )}
-                </div>
-                <div>
-                  <span style={label}>Incident Location:</span>
-                  <span style={value}>
-                    {addresses[complaint.complaintId] || `${complaint.incidentLocationLat}, ${complaint.incidentLocationLong}`}
-                  </span>
-                </div>
-                <div>
-                  <span style={label}>Created At:</span>
-                  <span style={value}>{complaint.createdAt ? new Date(complaint.createdAt).toLocaleString() : ""}</span>
-                </div>
-                <div>
-                  <span style={label}>Witness ID:</span>
-                  <span style={value}>{complaint.witnessId}</span>
-                </div>
-                <div>
-                  <span style={label}>Assigned To ID:</span>
-                  <span style={value}>{complaint.assignedToId}</span>
-                </div>
-              </div>
-            ))}
+                    <td style={idStyle}>{complaint.uuid}</td>
+                    <td style={tdStyle}>{complaint.title || "Complaint"}</td>
+                    <td style={{
+                      ...tdStyle,
+                      color:
+                        complaint.status === "Rejected"
+                          ? "#d32f2f"
+                          : complaint.status === "Solved"
+                          ? "#388e3c"
+                          : "#1976d2",
+                      fontWeight: 600
+                    }}>
+                      {complaint.status}
+                    </td>
+                    <td style={tdStyle}>
+                      {complaint.createdAt
+                        ? new Date(complaint.createdAt).toLocaleString()
+                        : ""}
+                    </td>
+                    <td style={tdStyle}>{complaint.assignedToId || "N/A"}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         )}
       </div>
@@ -389,11 +245,14 @@ export default function GetAllComplaints() {
           background: "#fff",
           color: "#888",
           textAlign: "center",
-          padding: "12px 0 8px 0",
+          padding: "10px 0 6px 0",
           fontSize: "0.97rem",
           letterSpacing: "0.5px",
           borderTop: "1px solid #e0e0e0",
-          marginTop: "auto"
+          position: "fixed",
+          left: 0,
+          bottom: 0,
+          zIndex: 100
         }}
       >
         © {new Date().getFullYear()} Citizen Complaint Portal

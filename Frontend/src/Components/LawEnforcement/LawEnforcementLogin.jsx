@@ -74,7 +74,7 @@ export default function LawEnforcementLogin() {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    gap: "1.2rem",
+    gap: "0.5 rem",
     position: "relative",
     zIndex: 2,
     transform: "scale(0.9) rotateY(20deg)",
@@ -85,10 +85,20 @@ export default function LawEnforcementLogin() {
   const titleStyle = {
     fontWeight: 900,
     fontSize: "2.1rem",
-    letterSpacing: "2px",
+    textAlign: "center",
     color: "#0f2027",
     marginBottom: "0.7rem",
-    textShadow: "0 2px 12px #e0eafc88"
+    textShadow: "0 2px 12px #e0eafc88",
+    // letterSpacing: "2px"
+  };
+
+  const subtitleStyle = {
+    fontWeight: 500,
+    fontSize: "1.08rem",
+    color: "#2c5364",
+    marginBottom: "1.2rem",
+    letterSpacing: "0.5px",
+    textAlign: "center"
   };
 
   const labelStyle = {
@@ -197,7 +207,10 @@ export default function LawEnforcementLogin() {
         onSubmit={handleSubmit}
         autoComplete="off"
       >
-        <div style={titleStyle}>LawEnforcement Portal</div>
+        <div style={titleStyle}>Law Enforcement Portal</div>
+        <div style={subtitleStyle}>
+          Secure access for authorized law enforcement personnel only.
+        </div>
         {error && <div style={errorStyle}>{error}</div>}
         <div style={labelStyle}>Email</div>
         <input

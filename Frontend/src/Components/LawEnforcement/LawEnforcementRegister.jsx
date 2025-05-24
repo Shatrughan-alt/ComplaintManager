@@ -89,7 +89,7 @@ export default function LawEnforcementRegister() {
     const titleStyle = {
         fontWeight: 900,
         fontSize: "2.1rem",
-        letterSpacing: "2px",
+        // letterSpacing: "2px",
         color: "#0f2027",
         marginBottom: "0.7rem",
         textShadow: "0 2px 12px #e0eafc88"
@@ -137,7 +137,7 @@ export default function LawEnforcementRegister() {
         color: "#fff",
         fontWeight: 800,
         fontSize: "1.15rem",
-        letterSpacing: "1.2px",
+        // letterSpacing: "1.2px",
         marginTop: "0.5rem",
         marginBottom: "0.2rem",
         cursor: "pointer",

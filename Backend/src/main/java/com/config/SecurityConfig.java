@@ -28,7 +28,7 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
 
             .requestMatchers(HttpMethod.PUT, "/api/complaints/*/status").hasAuthority("LAW_ENFORCEMENT")
 
-            .requestMatchers("/api/home", "/api/complaints/*", "/api/citizen/*").hasAuthority("CITIZEN")
+            .requestMatchers("/api/home", "/api/complaints/*", "/api/citizen/*").hasAnyAuthority("CITIZEN","LAW_ENFORCEMENT")
 
             .anyRequest().authenticated()
         )

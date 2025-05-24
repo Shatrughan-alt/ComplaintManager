@@ -11,6 +11,7 @@ import Errorpage from "./Components/ErrorPage";
 import { CitizenBlock, LawEnforcementBlock } from "./Components/CitizenLawEnforcementBlocks";
 import ComplaintWithId from './Components/Citizen/ComplaintWithId';
 import RegisterComplaint from './Components/Citizen/RegisterComplaint';
+import GetDetailedComplaint from './Components/LawEnforcement/GetDetailedComplaint';
 
 function Home() {
   return (
@@ -40,6 +41,7 @@ function App() {
         <Route path="/citizenLogin" exact element={<CitizenLogin />} />
         <Route path="/citizenRegister" exact element={<CitizenRegister />} />
         <Route path="/citizen/complaints" exact element={<ComplaintWithId />} />
+        <Route path="/getDetailedComplaint/:uuid" exact element={<GetDetailedComplaint />} /> 
         <Route path="/citizen/RegisterComplaint" exact element={<RegisterComplaint />} />
 
         <Route path="*" element={<Errorpage />} />
